@@ -1,3 +1,5 @@
+from datetime import date
+
 def get_transaction_type():
     while True:
         transaction_type = input("Transaction Type (income/expense): ").strip().lower()
@@ -43,6 +45,15 @@ def find_transaction_by_id(transactions, transaction_id):
         
     return None
 
+def filter_transactions_by_category(transactions, category):
+    filtered_transactions = []
+    
+    for transaction in transactions:
+        if transaction["category"].lower() == category.lower():
+            filtered_transactions.append(transaction)
+            
+    return filtered_transactions
+
 def create_transaction(transactions):
     print("\n--- ADD NEW TRANSACTION ---")
     
@@ -54,6 +65,7 @@ def create_transaction(transactions):
     
     transaction = {
         "id": transaction_id,
+        "date": date.today().isoformat(),
         "type": transaction_type,
         "amount": amount,
         "category": category,
@@ -143,3 +155,47 @@ def calculate_summary(transactions):
     }
 
     return summary
+
+def calculate_monthly_summary(transactions, month):
+    total_income = 0
+    total_expense = 0
+    transaction_count = 0
+    
+    for transaction in transactions:
+        transaction_date = transaction.get("date","")
+        
+        if transaction_date.startswith(month):
+            transaction_count += 1
+            
+            if transaction["type"] == "income":
+                total_income += transaction["amount"]
+            elif transaction["type"] == "expense":
+                total_expense += transaction["amount"]
+                
+    balance = total_income - total_expense
+    
+    summary = {
+        "total_income": total_income,
+        "total_expense": total_expense,
+        "balance": balance,
+        "transaction_count": transaction_count,
+    }
+    
+    return summary
+    
+def get_valid_month():
+    while True:
+        month = input("Month (YYYY-MM): ").strip()
+        
+        if(
+            len(month) == 7
+            and month[4] == "-"
+            and month[:4].isdigit()
+            and month[5:].isdigit()
+        ):
+            month_number = int(month[5:])
+            
+            if 1 <= month_number <= 12:
+                return month
+            
+        print("Invalid month. Use YYYY-MM, for example 2026-11.")

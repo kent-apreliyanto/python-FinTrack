@@ -8,3 +8,5 @@ venv/
 
 transaction.json
 transactions.json
+
+transactions_export.csv

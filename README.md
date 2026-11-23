@@ -14,6 +14,11 @@ This project was created as a Python learning portfolio project, focusing on fun
 - **Financial Summary** – Calculate total income, total expenses, and balance.
 - **Data Persistence** – Save and load transaction data using JSON.
 - **Input Validation** – Validate transaction types, amounts, and text inputs.
+- Automatic Transaction Date
+- Filter Transactions by Category
+- Monthly Financial Reports
+- Export Transactions to CSV
+- Automated Unit Testing with unittest
 
 ## Technologies
 
